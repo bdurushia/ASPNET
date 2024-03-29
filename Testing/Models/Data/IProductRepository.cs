@@ -7,5 +7,6 @@ namespace Testing.Models.Data
     {
         IEnumerable<Product> GetAllProducts();
         Product GetProduct(int id);
+        void UpdateProduct(Product product);
     }
 }
