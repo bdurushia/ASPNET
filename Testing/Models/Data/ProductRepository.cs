@@ -37,6 +37,11 @@ namespace Testing.Models.Data
             return _conn.Query<Category>("SELECT * FROM categories;");
         }
 
+        public IEnumerable<Product> GetAllProducts()
+        {
+            return _conn.Query<Product>("SELECT * FROM products;");
+        }
+
         public Product AssignCategory()
         {
             var categoryList = GetCategories();
@@ -45,9 +50,11 @@ namespace Testing.Models.Data
             return product;
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public void DeleteProduct(Product product)
         {
-            return _conn.Query<Product>("SELECT * FROM products;");
+            _conn.Execute("DELETE FROM reviews WHERE ProductID = @id;", new { id = product.ProductID });
+            _conn.Execute("DELETE FROM sales WHERE ProductID = @id;", new { id = product.ProductID });
+            _conn.Execute("DELETE FROM products WHERE ProductID = @id;", new { id = product.ProductID });
         }
     }
 }
